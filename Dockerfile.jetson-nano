@@ -50,9 +50,10 @@ RUN tar -xvf opencv411_lib.tar.gz -C /usr/local && tar -xvf opencv411_include.ta
 
 WORKDIR /
 
-# Download and build Darknet
+# Download and build Darknet BRANCH odc
+# https://github.com/opendatacam/darknet
 RUN \
-  git clone --depth 1 -b odc https://github.com/opendatacam/darknet
+  git clone --depth 1 -b odc https://github.com/juanengml/darknet
 
 WORKDIR /darknet
   
@@ -61,7 +62,7 @@ COPY ./Makefile.jetson-nano ./Makefile
 RUN make && ldconfig
 
 #get weights
-RUN wget https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.weights --no-check-certificate > /dev/null 2>&1
+RUN wget https://contador-suino-suinox.s3.us-east-2.amazonaws.com/pesos-yolov4/yolov4-tiny.weights --no-check-certificate > /dev/null 2>&1
 
 # Download and install OpenDataCam
 # first install node.js
@@ -70,7 +71,7 @@ RUN \
   apt-get install -y nodejs
 
 RUN \
-  git clone --depth 1 https://github.com/opendatacam/opendatacam.git  /var/local/opendatacam
+  git clone --depth 1 https://gitlab.com/suinox/contador-suinox.git  /var/local/opendatacam
 
 WORKDIR /var/local/opendatacam
 
